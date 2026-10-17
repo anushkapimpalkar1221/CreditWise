@@ -62,6 +62,10 @@ pip install -r requirements.txt
 streamlit run app.py
 ```
 
+## 🚀 Live Demo
+
+Try the application here: [CreditWise — Loan Approval Prediction](https://creditwise-cthhwmyxpcvkhe6jglcvcj.streamlit.app/)
+
 ## Disclaimer
 
 CreditWise provides machine learning predictions for educational and demonstration purposes only. Predictions are estimates and do not guarantee actual loan approval.
