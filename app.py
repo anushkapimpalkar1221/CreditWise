@@ -3,7 +3,6 @@ import streamlit as st
 import pandas as pd
 import joblib
 import plotly.express as px
-import plotly.graph_objects as go
 
 # ---------------- PAGE CONFIG ----------------
 st.set_page_config(
@@ -221,8 +220,8 @@ st.markdown("""
 
 
 # ---------------- MODEL PERFORMANCE DATA ----------------
-# These are the previously measured test-set results.
-# Update them if your model evaluation results change.
+# Previously measured test-set results.
+# Update these values if your model evaluation results change.
 
 accuracy_df = pd.DataFrame({
     "Model": [
@@ -242,12 +241,6 @@ metrics_df = pd.DataFrame({
     "Precision (%)": [87.56, 86.44, 74.51],
     "Recall (%)": [87.50, 86.50, 75.50]
 })
-
-confusion_matrices = {
-    "Logistic Regression": [[126, 13], [12, 49]],
-    "Gaussian Naive Bayes": [[126, 13], [14, 47]],
-    "K-Nearest Neighbors": [[120, 19], [30, 31]]
-}
 
 
 # ---------------- TOP METRIC CARDS ----------------
@@ -356,49 +349,6 @@ with chart_col2:
     )
 
     st.plotly_chart(metrics_fig, use_container_width=True)
-
-
-# Confusion matrices
-st.markdown("### Confusion Matrices")
-st.caption(
-    "Rows represent actual labels; columns represent predicted labels. "
-    "Label order: Not Approved, Approved."
-)
-
-cm_cols = st.columns(3)
-
-for cm_col, (model_name, matrix) in zip(
-    cm_cols, confusion_matrices.items()
-):
-    with cm_col:
-        cm_fig = go.Figure(
-            data=go.Heatmap(
-                z=matrix,
-                x=["Not Approved", "Approved"],
-                y=["Not Approved", "Approved"],
-                text=matrix,
-                texttemplate="%{text}",
-                colorscale=[
-                    [0, "#142640"],
-                    [0.5, "#276b91"],
-                    [1, "#38dfc0"]
-                ],
-                showscale=False
-            )
-        )
-
-        cm_fig.update_layout(
-            title=model_name,
-            template="plotly_dark",
-            paper_bgcolor="rgba(0,0,0,0)",
-            plot_bgcolor="rgba(0,0,0,0)",
-            font_color="#edf4ff",
-            margin=dict(l=10, r=10, t=50, b=10),
-            xaxis_title="Predicted label",
-            yaxis_title="Actual label"
-        )
-
-        st.plotly_chart(cm_fig, use_container_width=True)
 
 
 # ---------------- LOAD SAVED MODELS ----------------
